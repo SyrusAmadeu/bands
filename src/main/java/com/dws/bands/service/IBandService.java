@@ -1,0 +1,29 @@
+package com.dws.bands.service;
+
+import java.util.List;
+
+import com.dws.bands.model.Band;
+
+public interface IBandService {
+
+	/**
+	 * List all bands from Band Client API
+	 * 
+	 * @return a list of bands
+	 */
+	public List<Band> getAllBands();
+
+	/**
+	 * Fetch a band with a given ID
+	 * 
+	 * @param bandId Band ID
+	 * @return Band Object
+	 */
+	public Band getBand(String bandId);
+	
+	/**
+	 * Refresh Bands cache
+	 */
+	public void refreshCache();
+
+}
