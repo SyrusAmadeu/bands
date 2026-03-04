@@ -1,0 +1,10 @@
+spring:
+    application:
+        name: "bands"
+    cache:
+        ttl: 120
+        maxSize: 100
+
+band:
+    api:
+        url: "https://bands-api.vercel.app/api"
