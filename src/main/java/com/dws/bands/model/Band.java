@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Band {
 
 	@Schema(description = "Band ID", example = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
-	@Pattern(regexp = "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$", message = "O valor deve estar no formato xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
+	@Pattern(regexp = "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$", message = "The value must be in the following format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
 	private String id;
 
 	@Schema(description = "Band name", example = "Metallica")

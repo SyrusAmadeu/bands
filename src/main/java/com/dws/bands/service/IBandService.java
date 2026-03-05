@@ -7,11 +7,18 @@ import com.dws.bands.model.Band;
 public interface IBandService {
 
 	/**
-	 * List all bands from Band Client API
-	 * 
+	 * List all bands sorted from Band Client API
 	 * @return a list of bands
 	 */
 	public List<Band> getAllBands();
+	
+	/**
+	 * List all bands from Band Client API
+	 * @param sort Sort field
+	 * @param direction Sort order
+	 * @return a sorted list of bands
+	 */
+	public List<Band> getAllBands(String sort, String direction);
 
 	/**
 	 * Fetch a band with a given ID

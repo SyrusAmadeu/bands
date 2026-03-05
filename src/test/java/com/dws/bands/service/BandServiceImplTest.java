@@ -44,6 +44,54 @@ public class BandServiceImplTest {
 
 		verify(bandsApiClient, times(1)).fetchBands();
 	}
+	
+	@Test
+	void getAllBands_returnsMappedBands_alphabeticOrder() {
+		BandDto dto1 = new BandDto();
+		dto1.setId("1");
+		dto1.setName("Band A");
+
+		when(bandsApiClient.fetchBands()).thenReturn(List.of(dto1));
+
+		List<Band> bands = bandService.getAllBands("name", "desc");
+
+		assertEquals(1, bands.size());
+		assertEquals("Band A", bands.get(0).getName());
+
+		verify(bandsApiClient, times(1)).fetchBands();
+	}
+	
+	@Test
+	void getAllBands_returnsMappedBands_byPopularity() {
+		BandDto dto1 = new BandDto();
+		dto1.setId("1");
+		dto1.setName("Band A");
+
+		when(bandsApiClient.fetchBands()).thenReturn(List.of(dto1));
+
+		List<Band> bands = bandService.getAllBands("numPlays", "desc");
+
+		assertEquals(1, bands.size());
+		assertEquals("Band A", bands.get(0).getName());
+
+		verify(bandsApiClient, times(1)).fetchBands();
+	}
+	
+	@Test
+	void getAllBands_returnsMappedBands_nullValues() {
+		BandDto dto1 = new BandDto();
+		dto1.setId("1");
+		dto1.setName("Band A");
+
+		when(bandsApiClient.fetchBands()).thenReturn(List.of(dto1));
+
+		List<Band> bands = bandService.getAllBands(null, null);
+
+		assertEquals(1, bands.size());
+		assertEquals("Band A", bands.get(0).getName());
+
+		verify(bandsApiClient, times(1)).fetchBands();
+	}
 
 	@Test
 	void getBand_existingId_returnsBand() {
