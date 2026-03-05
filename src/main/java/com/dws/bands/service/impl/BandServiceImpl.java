@@ -87,7 +87,7 @@ public class BandServiceImpl implements IBandService {
 
 		Comparator<Band> comparator;
 
-		switch (sort) {
+		switch (sort.toLowerCase()) {
 			case "numPlays":
 				comparator = Comparator.comparingLong(Band::getNumPlays);
 				break;
