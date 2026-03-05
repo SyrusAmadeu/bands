@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dws.bands.model.Band;
@@ -38,8 +39,40 @@ public class BandController {
     		schema = @Schema(type = "string", example = "Error 502: Bad Gateway")))
     })
 	@GetMapping
-	public ResponseEntity<List<Band>> getAllBands() {
+	public ResponseEntity<List<Band>> getAllBands(@RequestParam(defaultValue = "") String sort,
+	        @RequestParam(defaultValue = "asc") String direction) {
 		List<Band> bands = iBandService.getAllBands();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(bands);
+	}
+	
+	@Operation(summary = "List all bands", description = "Returns all bands available.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "List successfully returned"),
+        @ApiResponse(responseCode = "502", description = "External API Bad Gateway", 
+		content = @Content(mediaType = "application/json",
+    		schema = @Schema(type = "string", example = "Error 502: Bad Gateway")))
+    })
+	@GetMapping("/popularity")
+	public ResponseEntity<List<Band>> getAllBandsByPopularity(
+	        @RequestParam(defaultValue = "asc") String direction) {
+		List<Band> bands = iBandService.getAllBands("numPlays", direction);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(bands);
+	}
+	
+	@Operation(summary = "List all bands", description = "Returns all bands available.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "List successfully returned"),
+        @ApiResponse(responseCode = "502", description = "External API Bad Gateway", 
+		content = @Content(mediaType = "application/json",
+    		schema = @Schema(type = "string", example = "Error 502: Bad Gateway")))
+    })
+	@GetMapping("/alphabetic-order")
+	public ResponseEntity<List<Band>> getAllBandsByAlphabeticOrder(
+	        @RequestParam(defaultValue = "asc") String direction) {
+		List<Band> bands = iBandService.getAllBands("name", direction);
+		
 		return ResponseEntity.status(HttpStatus.OK).body(bands);
 	}
 

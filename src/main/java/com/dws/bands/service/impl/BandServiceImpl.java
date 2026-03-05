@@ -1,5 +1,7 @@
 package com.dws.bands.service.impl;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -25,15 +27,33 @@ public class BandServiceImpl implements IBandService {
 	public BandServiceImpl(BandsApiClient bandsApiClient) {
 		this.bandsApiClient = bandsApiClient;
 	}
-
-    @Override
+	
+	@Override
 	@Cacheable(value = "bands", unless = "#result == null || #result.isEmpty()")
     public List<Band> getAllBands() {
     	log.info(">> getAllBands() :: Fetching all bands.");
-        return bandsApiClient.fetchBands()
+        List<Band> bands = new ArrayList<>(bandsApiClient.fetchBands()
                 .stream()
                 .map(BandMapper::dtoToBand)
-                .toList();
+                .toList());
+        
+        return bands;
+    }
+
+    @Override
+	@Cacheable(value = "bands", unless = "#result == null || #result.isEmpty()")
+    public List<Band> getAllBands(String sort, String direction) {
+    	log.info(">> getAllBands() :: Fetching all bands.");
+    	
+		Comparator<Band> comparator = buildComparator(sort, direction);
+
+        List<Band> bands = new ArrayList<>(bandsApiClient.fetchBands()
+                .stream()
+                .map(BandMapper::dtoToBand)
+                .toList());
+        
+        bands.sort(comparator);
+        return bands;
     }
 
 
@@ -55,5 +75,34 @@ public class BandServiceImpl implements IBandService {
     	log.info(">> refreshCache() :: Refrshing bands cache.");
     }
     
+    
+    private Comparator<Band> buildComparator(String sort, String direction) {
+    	if (sort == null) {
+			sort = "name";
+		}
+
+		if (direction == null) {
+			direction = "asc";
+		}
+
+		Comparator<Band> comparator;
+
+		switch (sort) {
+			case "numPlays":
+				comparator = Comparator.comparingLong(Band::getNumPlays);
+				break;
+	
+			case "name":
+			default:
+				comparator = Comparator.comparing(Band::getName);
+				break;
+		}
+
+		if ("desc".equalsIgnoreCase(direction)) {
+			comparator = comparator.reversed();
+		}
+		
+		return comparator;
+    }
     
 }
