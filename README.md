@@ -18,11 +18,14 @@ Technologies Used
 
 Endpoints
 
-1. Get All Bands
+1. Get All Bands (Sorted by name and popularity also)
 
 GET /api/bands
+GET /api/bands/popularity?direction=asc
+GET /api/bands/alphabetic-order?direction=desc
 
 - Returns all bands fetched from the external API.
+- The `?direction` is an optional flag. Possible valaues: asc|desc. 
 - Example response:
 
 [
