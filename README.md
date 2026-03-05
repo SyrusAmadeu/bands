@@ -104,17 +104,26 @@ It includes success and error response examples, including invalid ID and band n
 
 ---
 
+Running with Docker
+
+1. Install Docker on your machine
+2. Run: `docker run -p 8080:8080 --name bands ohnilovec/bands/v1`
+
+And its running with no further configuration.
+
+---
+
 Setup and Running
 
 1. Clone the repository:
 
-git clone https://github.com/SyrusAmadeu/bands
-cd bands
+`git clone https://github.com/SyrusAmadeu/bands`
+`cd bands`
 
 2. Build and run:
 
-mvn clean install
-mvn spring-boot:run
+`mvn clean install`
+`mvn spring-boot:run`
 
 3. Access endpoints via Postman, curl, or browser:
 
